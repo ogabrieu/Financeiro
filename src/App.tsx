@@ -748,7 +748,7 @@ const App: React.FC = () => {
                   <td className="py-2 px-4">{exp.descricao}</td>
                   <td className="py-2 px-4"><div className="flex items-center"><span className="w-4 h-4 rounded-full mr-2" style={{backgroundColor:category?.cor || '#94a3b8'}}></span>{category?.nome || 'N/A'}</div></td>
                   <td className="py-2 px-4 font-semibold text-red-400">{formatCurrency(exp.valor)}</td>
-                  {companyId === 'consolidated' && <td className="py-2 px-4">{companyName}</td>}
+                  {companyId === 'consolidado' && <td className="py-2 px-4">{companyName}</td>}
                   <td className="py-2 px-4 space-x-2">
                     {canEdit && <button onClick={()=>openExpenseModal(exp)} className="text-blue-500 hover:text-blue-400"><PencilIcon /></button>}
                     {canEdit && <button onClick={()=>handleDeleteExpense(exp.id)} className="text-red-500 hover:text-red-400"><TrashIcon /></button>}
@@ -916,7 +916,6 @@ const App: React.FC = () => {
         </Modal>
       )}
 
-      {/* O componente ImportModal agora está no seu próprio arquivo e aceita 'supabase' */}
       <ImportModal
         visible={showImportModal}
         categories={categories}

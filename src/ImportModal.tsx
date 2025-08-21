@@ -35,7 +35,6 @@ const ImportModal: React.FC<ImportModalProps> = ({
   setShowImportModal,
   supabase 
 }) => {
-  const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [transactions, setTransactions] = useState<any[]>([]);
   const [showMapping, setShowMapping] = useState(false);
@@ -69,7 +68,6 @@ const ImportModal: React.FC<ImportModalProps> = ({
     const selected = e.target.files?.[0];
     if (!selected) return;
 
-    setFile(selected);
     setLoading(true);
     setShowMapping(false);
 
