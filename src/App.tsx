@@ -1,5 +1,5 @@
 import { supabase } from './lib/supabase.ts';
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { format, parse, isWithinInterval, startOfMonth, endOfMonth, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import ImportModal from './ImportModal';
@@ -17,7 +17,6 @@ const PencilIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" hei
 const TrashIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>);
 const UserIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>);
 const LogOutIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>);
-const FileUpIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L15 2z"/><path d="M14 2v6h6"/><path d="M4 16v-2.4a2 2 0 0 1 1.6-1.92l5.7-.93c.95-.15 1.7-.85 2.1-1.74a4.12 4.12 0 0 1 2.3-2.5 2.1 2.1 0 0 1 2.7-.2v.22c.1.1.2.2.3.4s.2.3.2.5v.5c0 .2 0 .4-.2.6s-.2.3-.4.4-.3.2-.5.2-.5.1-.7.1a2 2 0 0 1-.7-.1c-1.2-.4-2.2-1.3-2.8-2.4l-5-5-5 5z"/></svg>);
 const PlusCircleIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>);
 const FileDownIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="m15 15-3 3-3-3"/></svg>);
 const UsersIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>);
@@ -39,10 +38,6 @@ const formatDate = (date: string) => {
   }
 };
 
-// As funções getLocalStorageData e setLocalStorageData não são mais necessárias
-// para persistir os dados do app, pois o Supabase fará esse trabalho.
-// Elas podem ser removidas ou mantidas caso você queira persistir outros
-// dados não-críticos do estado do app, como a empresa selecionada.
 const getLocalStorageData = (key: string, def: any) => {
   try { const data = localStorage.getItem(key); return data ? JSON.parse(data) : def; }
   catch (e) { console.error(`Erro ao carregar "${key}"`, e); return def; }
@@ -164,8 +159,6 @@ const App: React.FC = () => {
   };
 
   // ----- Funções de mapeamento manual (ainda usam localStorage) -----
-  // Mantidas para não quebrar a funcionalidade. Você pode refatorar
-  // para o Supabase se quiser persistir globalmente.
   const salvarMapeamento = () => {
     try {
       setLocalStorageData('category_mappings', categoryMappings);
@@ -284,7 +277,7 @@ const App: React.FC = () => {
     </header>
   );
 
-  const Card: React.FC<{ title: string; className?: string }> = ({ title, children, className = '' }) => (
+  const Card: React.FC<{ title: string; className?: string; children: React.ReactNode }> = ({ title, children, className = '' }) => (
     <div className={`bg-slate-800 p-6 rounded-3xl shadow-xl ${className}`}>
       <h3 className="text-xl font-semibold mb-4 text-slate-200">{title}</h3>
       {children}
@@ -303,9 +296,6 @@ const App: React.FC = () => {
     </div>
   );
 
-  // Removido o componente ImportModalOld, agora usamos o componente importado
-
-  // Refatorado CategoryForm para usar Supabase
   const CategoryForm: React.FC = () => {
     const [formData, setFormData] = useState({ nome: editingCategory?.nome || '', cor: editingCategory?.cor || '#64748b', ativa: editingCategory?.ativa ?? true });
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setFormData(p => ({ ...p, [e.target.name]: e.target.value }));
@@ -315,7 +305,6 @@ const App: React.FC = () => {
       if (!companyId) return showToast('Selecione uma empresa antes de criar uma categoria.', 'error');
       
       if (editingCategory) {
-        // Lógica de atualização com Supabase
         const { data, error } = await supabase
           .from('categories')
           .update(formData)
@@ -331,7 +320,6 @@ const App: React.FC = () => {
           closeModals();
         }
       } else {
-        // Lógica de criação com Supabase
         const { data, error } = await supabase
           .from('categories')
           .insert({ ...formData, id: generateId(), empresa_id: companyId })
@@ -361,7 +349,6 @@ const App: React.FC = () => {
     );
   };
 
-  // Refatorado ExpenseForm para usar Supabase
   const ExpenseForm: React.FC = () => {
     const [formData, setFormData] = useState({
       data: editingExpense?.data || format(new Date(), 'yyyy-MM-dd'),
@@ -380,7 +367,6 @@ const App: React.FC = () => {
       };
 
       if (editingExpense) {
-        // Lógica de atualização com Supabase
         const { data, error } = await supabase
           .from('expenses')
           .update(expenseData)
@@ -396,7 +382,6 @@ const App: React.FC = () => {
           closeModals();
         }
       } else {
-        // Lógica de criação com Supabase
         const { data, error } = await supabase
           .from('expenses')
           .insert({ ...expenseData, id: generateId() })
@@ -434,7 +419,6 @@ const App: React.FC = () => {
     );
   };
 
-  // Refatorado UserForm para usar Supabase
   const UserForm: React.FC = () => {
     const [formData, setFormData] = useState({ name: editingUser?.name || '', email: editingUser?.email || '', role: editingUser?.role || 'viewer' });
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setFormData(p => ({ ...p, [e.target.name]: e.target.value }));
@@ -492,7 +476,6 @@ const App: React.FC = () => {
     );
   };
 
-  // Refatorado CompanyForm para usar Supabase
   const CompanyForm: React.FC = () => {
     const [formData, setFormData] = useState({ name: editingCompany?.name || '' });
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setFormData(p => ({ ...p, [e.target.name]: e.target.value }));
@@ -543,7 +526,6 @@ const App: React.FC = () => {
     );
   };
 
-  // --------- Pages ----------
   const DashboardPage: React.FC = () => {
     const [startDate, setStartDate] = useState(format(startOfMonth(new Date()), 'yyyy-MM-dd'));
     const [endDate, setEndDate] = useState(format(endOfMonth(new Date()), 'yyyy-MM-dd'));
@@ -676,7 +658,6 @@ const App: React.FC = () => {
     );
   };
 
-  // Refatorado CategoriesPage para usar Supabase
   const CategoriesPage: React.FC = () => {
     const handleDeleteCategory = async (id: string) => {
       if (expenses.some(e => e.categoria_id === id)) return showToast('Não é possível apagar uma categoria com despesas vinculadas.', 'error');
@@ -726,7 +707,6 @@ const App: React.FC = () => {
     );
   };
 
-  // Refatorado ExpenseTable para usar Supabase
   const ExpenseTable: React.FC<{ expenses: any[]; categories: any[]; openExpenseModal: (e?: any)=>void }> =
   ({ expenses: expensesList, categories, openExpenseModal }) => {
     const handleDeleteExpense = async (id: string) => {
@@ -804,7 +784,6 @@ const App: React.FC = () => {
     );
   };
 
-  // Refatorado UsersPage para usar Supabase
   const UsersPage: React.FC = () => {
     const handleDeleteUser = async (id: string) => {
       if (window.confirm('Tem certeza que deseja apagar este usuário?')) {
@@ -853,10 +832,8 @@ const App: React.FC = () => {
     );
   };
 
-  // Refatorado CompaniesPage para usar Supabase
   const CompaniesPage: React.FC = () => {
     const handleDeleteCompany = async (id: string) => {
-      // Verificamos no cliente antes de chamar o Supabase
       if (expenses.some(e => e.empresa_id === id) || users.some(u => u.companyId === id) || categories.some(c => c.empresa_id === id)) {
         return showToast('Não é possível apagar uma empresa com despesas, usuários ou categorias vinculadas.', 'error');
       }
@@ -940,6 +917,7 @@ const App: React.FC = () => {
         </Modal>
       )}
 
+      {/* O componente ImportModal agora está no seu próprio arquivo e aceita 'supabase' */}
       <ImportModal
         visible={showImportModal}
         categories={categories}
@@ -950,7 +928,7 @@ const App: React.FC = () => {
         companyId={companyId}
         showToast={showToast}
         setShowImportModal={setShowImportModal}
-        supabase={supabase} // Passando a instância do Supabase
+        supabase={supabase}
       />
 
       {toastMessage && (
