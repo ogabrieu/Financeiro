@@ -1,7 +1,11 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { supabase } from './lib/supabase.ts'; // Importe o supabase aqui também
-import { FileUpIcon, FileDownIcon, PlusCircleIcon } from './App'; // Importe os ícones
-import { formatCurrency, formatDate } from './App'; // Importe as funções auxiliares
+import { SupabaseClient } from '@supabase/supabase-js';
+
+// Importe as funções e ícones exportados de App.tsx
+import { 
+  FileUpIcon, FileDownIcon, PlusCircleIcon, 
+  formatCurrency, formatDate 
+} from './App'; 
 
 // PapaParse via <script> no index.html
 declare var Papa: any;
@@ -16,7 +20,7 @@ interface ImportModalProps {
   companyId: string | null;
   showToast: (message: string, type?: 'success' | 'error') => void;
   setShowImportModal: (visible: boolean) => void;
-  supabase: any; // A prop supabase agora é esperada
+  supabase: SupabaseClient; // A tipagem correta para o cliente Supabase
 }
 
 const ImportModal: React.FC<ImportModalProps> = ({ 
@@ -29,7 +33,7 @@ const ImportModal: React.FC<ImportModalProps> = ({
   companyId,
   showToast,
   setShowImportModal,
-  supabase // Aceite a prop supabase
+  supabase 
 }) => {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
@@ -42,6 +46,11 @@ const ImportModal: React.FC<ImportModalProps> = ({
     () => categories.filter(c => c.empresa_id === companyId),
     [categories, companyId]
   );
+  
+  // Sincroniza as categorias locais com as globais
+  useEffect(() => {
+    setCategories(localCategories);
+  }, [localCategories, setCategories]);
 
   const normalizeHeaders = (fields: string[]) =>
     fields.map((f) => (f || '').toString().trim().toLowerCase());
@@ -98,7 +107,7 @@ const ImportModal: React.FC<ImportModalProps> = ({
               return;
             }
 
-            const parsed = (results.data as any[]).map((row, i) => {
+            const parsed = (results.data as any[]).map((row: any, i: number) => {
               const valRaw = row[headers[valueIdx]];
               const val = parseFloat(String(valRaw).replace(',', '.'));
               return {
@@ -153,7 +162,6 @@ const ImportModal: React.FC<ImportModalProps> = ({
       empresa_id: companyId,
     };
     
-    // Insere a nova categoria no Supabase
     const { data, error } = await supabase
       .from('categories')
       .insert(newCategory)
@@ -180,7 +188,6 @@ const ImportModal: React.FC<ImportModalProps> = ({
       empresa_id: companyId,
     }));
     
-    // Insere todas as despesas de uma vez no Supabase
     const { data, error } = await supabase
       .from('expenses')
       .insert(expensesToInsert)
