@@ -217,7 +217,7 @@ const ImportModal: React.FC<ImportModalProps> = ({
         {!showMapping ? (
           <>
             <a href="data:text/csv;charset=utf-8,data%2Cdescricao%2Cvalor%0A2025-01-15%2CExemplo%20de%20despesa%2C-150%2C00" download="modelo-despesas.csv" className="w-full px-6 py-3 text-center bg-blue-600 text-white rounded-xl shadow-lg hover:bg-blue-700 flex items-center justify-center mb-4">
-              <FileDownIcon /><span className="ml-2">Baixar Modelo CSV</span>
+              <FileDownIcon className="ml-2" /><span className="ml-2">Baixar Modelo CSV</span>
             </a>
             <div className="flex items-center justify-center p-6 bg-slate-800 rounded-lg border-2 border-dashed border-slate-600">
               <label htmlFor="csv-file" className="cursor-pointer text-center">
