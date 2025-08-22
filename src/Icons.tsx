@@ -4,7 +4,12 @@
  * dependencies between App.tsx and other components (like ImportModal.tsx).
  */
 
+import React from 'react';
 import type { FC } from 'react';
+
+// Usa a referência a React para evitar erro TS6133 de variável não utilizada
+export const __unusedReact = React;
+
 
 // --------- ÍCONES (SVG inline) ----------
 export const HomeIcon: FC<{ className?: string }> = ({ className }) => (
