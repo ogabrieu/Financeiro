@@ -1,4 +1,3 @@
-import React from 'react';
 
 /**
  * This file exports all SVG icon components used across the application.
@@ -6,8 +5,10 @@ import React from 'react';
  * dependencies between App.tsx and other components (like ImportModal.tsx).
  */
 
+import type { FC } from 'react';
+
 // --------- ÍCONES (SVG inline) ----------
-export const HomeIcon = ({ className }: { className?: string }) => (
+export const HomeIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -25,7 +26,7 @@ export const HomeIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const DollarSignIcon = ({ className }: { className?: string }) => (
+export const DollarSignIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -43,7 +44,7 @@ export const DollarSignIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const TagIcon = ({ className }: { className?: string }) => (
+export const TagIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -61,7 +62,7 @@ export const TagIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const FilterIcon = ({ className }: { className?: string }) => (
+export const FilterIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -78,7 +79,7 @@ export const FilterIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const PlusIcon = ({ className }: { className?: string }) => (
+export const PlusIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -96,7 +97,7 @@ export const PlusIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const PencilIcon = ({ className }: { className?: string }) => (
+export const PencilIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -113,7 +114,7 @@ export const PencilIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const TrashIcon = ({ className }: { className?: string }) => (
+export const TrashIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -132,7 +133,7 @@ export const TrashIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const UserIcon = ({ className }: { className?: string }) => (
+export const UserIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -150,7 +151,7 @@ export const UserIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const LogOutIcon = ({ className }: { className?: string }) => (
+export const LogOutIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -169,7 +170,7 @@ export const LogOutIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const FileUpIcon = ({ className }: { className?: string }) => (
+export const FileUpIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -188,7 +189,7 @@ export const FileUpIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const PlusCircleIcon = ({ className }: { className?: string }) => (
+export const PlusCircleIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -207,7 +208,7 @@ export const PlusCircleIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const FileDownIcon = ({ className }: { className?: string }) => (
+export const FileDownIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -227,7 +228,7 @@ export const FileDownIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const UsersIcon = ({ className }: { className?: string }) => (
+export const UsersIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -247,7 +248,7 @@ export const UsersIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const BuildingIcon = ({ className }: { className?: string }) => (
+export const BuildingIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
