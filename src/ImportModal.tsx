@@ -3,9 +3,9 @@ import { SupabaseClient } from '@supabase/supabase-js';
 
 // Importe as funções e ícones exportados de App.tsx
 import { 
-  FileUpIcon, FileDownIcon, PlusCircleIcon, 
   formatCurrency, formatDate 
 } from './App'; 
+import { FileUpIcon, FileDownIcon, PlusCircleIcon } from './Icons'; 
 
 // PapaParse via <script> no index.html
 declare var Papa: any;

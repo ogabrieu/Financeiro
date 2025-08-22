@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     // outras opções ...
-    "noUnusedLocals": false
+    "noUnusedLocals": false,
   },
   "files": [],
   "references": [

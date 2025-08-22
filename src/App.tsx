@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { format, parse, isWithinInterval, startOfMonth, endOfMonth, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import ImportModal from './ImportModal';
-import { FileDownIcon, PlusIcon, HomeIcon, DollarSignIcon, TagIcon, UsersIcon, BuildingIcon, PencilIcon, TrashIcon, LogOutIcon } from './Icons';
+import { FileDownIcon, PlusIcon, HomeIcon, DollarSignIcon, TagIcon, UsersIcon, BuildingIcon, PencilIcon, TrashIcon, LogOutIcon, FilterIcon, UserIcon, PlusCircleIcon, FileUpIcon } from './Icons';
 
 // PapaParse via <script> no index.html
 declare var Papa: any;
