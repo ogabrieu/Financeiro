@@ -4,7 +4,7 @@
  * dependencies between App.tsx and other components (like ImportModal.tsx).
  */
 
-import type { FC from 'react';
+import type { FC } from 'react';
 
 // --------- ÍCONES (SVG inline) ----------
 export const HomeIcon: FC<{ className?: string }> = ({ className }) => (
